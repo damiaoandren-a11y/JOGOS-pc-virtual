@@ -1,0 +1,94 @@
+import time 
+
+class VirtualPC:
+def **init**(self):
+# Hardware básico simulado
+self.memory = * 256  # 256 bytes de memória RAM
+self.reg_A = 0           # Registrador A
+self.reg_B = 0           # Registrador B
+self.pc = 0              # Program Counter (Contador de Programa)
+self.running = True 
+
+def load_program(self, program):
+"""Carrega as instruções na memória a partir da posição 0"""
+for i, instruction in enumerate(program):
+self.memory[i] = instruction 
+
+def fetch(self):
+"""Busca a próxima instrução na memória"""
+instruction = self.memory[self.pc]
+self.pc += 1
+return instruction 
+
+def execute(self, instruction):
+"""Decodifica e executa a instrução"""
+opcode = instruction 
+
+if opcode == "LOAD_A":
+value = instruction[1]
+self.reg_A = value
+print(f"[EXEC] Registrador A carregado com: {value}")
+
+elif opcode == "LOAD_B":
+value = instruction[1]
+self.reg_B = value
+print(f"[EXEC] Registrador B carregado com: {value}")
+
+elif opcode == "ADD":
+
+# Soma A + B e armazena o resultado em A
+
+self.reg_A = self.reg_A + self.reg_B
+print(f"[EXEC] Somado A + B. Novo valor de A: {self.reg_A}")
+
+elif opcode == "SUB":
+# Subtrai A - B e armazena o resultado em A
+self.reg_A = self.reg_A - self.reg_B
+print(f"[EXEC] Subtraído A - B. Novo valor de A: {self.reg_A}") 
+
+elif opcode == "STR":
+address = instruction[1]
+self.memory[address] = self.reg_A
+print(f"[EXEC] Valor de A ({self.reg_A}) salvo no endereço de memória {address}")
+
+elif opcode == "HALT":
+self.running = False
+print("[EXEC] Comando HALT recebido. Desligando PC Virtual...")
+
+def run(self):
+"""Ciclo de Computação: Busca -> Decodifica -> Executa"""
+print("--- Iniciando o PC Virtual ---")
+while self.running:
+instruction = self.fetch()
+self.execute(instruction)
+time.sleep(0.5) # Apenas para visualizarmos passo a passo
+print("--- PC Virtual Desligado com Sucesso ---") 
+
+### --- BUILD E PROGRAMAÇÃO DO PC VIRTUAL ---
+
+if **name** == "**main**": 
+
+### Criamos a nossa instância de computador virtual
+
+meu_pc = VirtualPC() 
+
+### Escrevemos um "programa" para rodar nele
+
+### Objetivo: Carregar 10 em A, carregar 5 em B, somar, salvar o resultado na memória 50 e desligar.
+
+programa_assembly = [
+("LOAD_A", 10),
+("LOAD_B", 5),
+("ADD",),
+("STR", 50),
+("HALT",)
+] 
+
+### Carrega e liga o computador virtual
+
+meu_pc.load_program(programa_assembly)
+meu_pc.run() 
+
+### Exibe o estado da memória após a execução
+
+print(f"\n[RAM Estado Final] Posição 50 da memória contém o valor: {meu_pc.memory}")
